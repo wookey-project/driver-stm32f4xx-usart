@@ -1,0 +1,12 @@
+config USR_DRV_USART
+  bool  "userspace USART driver library"
+  default y
+  ---help---
+  Support for STM32 USART. This driver library manages the 6 U(S)ART
+  in Console and SmartCard mode. The whole device, gpio and
+  interrupt management is abstracted by the driver layer.
+config USR_DRV_USART_CFLAGS
+  string
+  default " -I../../drivers/socs/stm32f439/usart/api " if USR_DRV_USART
+
+
