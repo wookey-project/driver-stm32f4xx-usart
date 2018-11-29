@@ -8,7 +8,7 @@
 #define PROD_CLOCK_APB1  42000000
 #define PROD_CLOCK_APB2  84000000
 
-device_t usart_dev = { 0 };
+device_t usart_dev;
 int      usart_desc = 0;
 
 
@@ -320,6 +320,7 @@ uint8_t usart_init(usart_config_t *config)
 /**** usart early init ****/
 uint8_t usart_early_init(usart_config_t *config)
 {
+    memset((void*)&usart_dev, 0, sizeof(device_t));
     uint8_t ret = 0;
 
     strncpy(usart_dev.name, usarts[config->usart].name, strlen(usarts[config->usart].name));
