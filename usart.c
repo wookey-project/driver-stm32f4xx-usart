@@ -121,7 +121,7 @@ void usart_set_baudrate(usart_config_t * config)
 
     /* FIXME we should check CR1 in order to get the OVER8 configuration */
 
-    /* Compute the divider using the baudrate and the APB bus clock 
+    /* Compute the divider using the baudrate and the APB bus clock
      * (APB1 or APB2) depending on the considered USART */
     divider = usart_get_bus_clock(config) / config->baudrate;
 
@@ -229,7 +229,7 @@ void usart_disable(usart_config_t *config)
 
 
 /*
- * To be executed *after* INIT_DONE. the USART must be mapped. 
+ * To be executed *after* INIT_DONE. the USART must be mapped.
  */
 uint8_t usart_init(usart_config_t *config)
 {
@@ -318,7 +318,10 @@ uint8_t usart_init(usart_config_t *config)
 }
 
 /**** usart early init ****/
-uint8_t usart_early_init(usart_config_t *config)
+
+static volatile bool map_voluntary;
+
+uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode)
 {
     memset((void*)&usart_dev, 0, sizeof(device_t));
     uint8_t ret = 0;
@@ -381,7 +384,16 @@ uint8_t usart_early_init(usart_config_t *config)
     usart_dev.size = 0x400;
     usart_dev.irq_num = 1;
     usart_dev.gpio_num = 2;
-    usart_dev.map_mode = DEV_MAP_AUTO;
+    if (map_mode == USART_MAP_AUTO) {
+        usart_dev.map_mode = DEV_MAP_AUTO;
+        map_voluntary = false;
+    } else if (map_mode == USART_MAP_VOLUNTARY) {
+        usart_dev.map_mode = DEV_MAP_VOLUNTARY;
+        map_voluntary = true;
+    } else {
+        printf("invalid map mode!\n");
+        return 1;
+    }
     usart_dev.irqs[0].irq = usarts[config->usart].irq;
 
     /*
@@ -457,6 +469,31 @@ uint8_t usart_early_init(usart_config_t *config)
     ret = sys_init(INIT_DEVACCESS, &usart_dev, &usart_desc);
     return ret;
 }
+
+int usart_map(void)
+{
+    if (map_voluntary) {
+        uint8_t ret;
+        if ((ret = sys_cfg(CFG_DEV_MAP, usart_desc)) != SYS_E_DONE) {
+            printf("Unable to map usart!\n");
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int usart_unmap(void)
+{
+    if (map_voluntary) {
+        uint8_t ret;
+        if ((ret = sys_cfg(CFG_DEV_UNMAP, usart_desc)) != SYS_E_DONE) {
+            printf("Unable to unmap usart!\n");
+            return 1;
+        }
+    }
+    return 0;
+}
+
 
 /* Get the current clock value of the USART bus */
 uint32_t usart_get_bus_clock(usart_config_t * config)

@@ -9,7 +9,7 @@ typedef void (*cb_usart_irq_handler_t) (uint32_t status, uint32_t data);
 typedef char (*cb_usart_getc_t) (void);
 typedef void (*cb_usart_putc_t) (char);
 
-/* Defines the USART mode that we consider 
+/* Defines the USART mode that we consider
  * [RB] TODO: to be completed with other USART modes if/when needed! (IrDA, LIN, ...)
  * For now, only the classical UART console mode and the SMARTCARD modes are
  * implemented.
@@ -33,8 +33,13 @@ typedef enum {
   USART_SET_ALL            = 0b111111111
 } usart_mask_t;
 
+typedef enum {
+    USART_MAP_AUTO,
+    USART_MAP_VOLUNTARY
+} usart_map_mode_t;
 
-/* [RB] TODO: add some magic initialization values and assert to avoid manipulation 
+
+/* [RB] TODO: add some magic initialization values and assert to avoid manipulation
  * of uninitialized structures!
  */
 typedef struct __packed {
@@ -146,7 +151,7 @@ typedef struct __packed {
  * This function declare the device at init time and configure the GPIO and
  * IRQ handlers.
  */
-uint8_t usart_early_init(usart_config_t * config);
+uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode);
 
 /**
  * usart_init - Initialize the USART
@@ -215,5 +220,9 @@ uint32_t usart_get_bus_clock(usart_config_t * config);
 void usart_enable(usart_config_t *config);
 
 void usart_disable(usart_config_t *config);
+
+int usart_map(void);
+
+int usart_unmap(void);
 
 #endif                          /* STM32F4XX_USART_H */
