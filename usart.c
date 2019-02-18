@@ -2,8 +2,6 @@
 #include "api/libusart.h"
 #include "api/libusart_regs.h"
 #include "api/syscall.h"
-#include "kernel/exported/devices.h"
-#include "kernel/exported/gpio.h"
 
 #define PROD_CLOCK_APB1  42000000
 #define PROD_CLOCK_APB2  84000000
