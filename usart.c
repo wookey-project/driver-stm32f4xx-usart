@@ -339,67 +339,98 @@ uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode)
              * Please update the json file of your board to set the correct
              * GPIO config depending on your needs
              */
-            usart_dev.gpios[0].kref.port = usart1_dev_infos.gpios[0].port;
-            usart_dev.gpios[0].kref.pin = usart1_dev_infos.gpios[0].pin;
-
-            usart_dev.gpios[1].kref.port = usart1_dev_infos.gpios[1].port;
-            usart_dev.gpios[1].kref.pin = usart1_dev_infos.gpios[1].pin;
+            if (config->mode == SMARTCARD) {
+                usart_dev.gpios[0].kref.port = usart1_dev_infos.gpios[USART1_SC_TX].port;
+                usart_dev.gpios[0].kref.pin = usart1_dev_infos.gpios[USART1_SC_TX].pin;
+                usart_dev.gpios[1].kref.port = usart1_dev_infos.gpios[USART1_SC_CK].port;
+                usart_dev.gpios[1].kref.pin = usart1_dev_infos.gpios[USART1_SC_CK].pin;
+            } else {
+                usart_dev.gpios[0].kref.port = usart1_dev_infos.gpios[USART1_TX].port;
+                usart_dev.gpios[0].kref.pin = usart1_dev_infos.gpios[USART1_TX].pin;
+                usart_dev.gpios[1].kref.port = usart1_dev_infos.gpios[USART1_RX].port;
+                usart_dev.gpios[1].kref.pin = usart1_dev_infos.gpios[USART1_RX].pin;
+            }
             break;
         case 2:
             usart_dev.address = usart2_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(2, S);
             usart_dev.irqs[0].irq = usart2_dev_infos.irqs[0];
 
-            usart_dev.gpios[0].kref.port = usart2_dev_infos.gpios[0].port;
-            usart_dev.gpios[0].kref.pin = usart2_dev_infos.gpios[0].pin;
-
-            usart_dev.gpios[1].kref.port = usart2_dev_infos.gpios[1].port;
-            usart_dev.gpios[1].kref.pin = usart2_dev_infos.gpios[1].pin;
+            if (config->mode == SMARTCARD) {
+                usart_dev.gpios[0].kref.port = usart2_dev_infos.gpios[USART2_SC_TX].port;
+                usart_dev.gpios[0].kref.pin = usart2_dev_infos.gpios[USART2_SC_TX].pin;
+                usart_dev.gpios[1].kref.port = usart2_dev_infos.gpios[USART2_SC_CK].port;
+                usart_dev.gpios[1].kref.pin = usart2_dev_infos.gpios[USART2_SC_CK].pin;
+            } else {
+                usart_dev.gpios[0].kref.port = usart2_dev_infos.gpios[USART2_TX].port;
+                usart_dev.gpios[0].kref.pin = usart2_dev_infos.gpios[USART2_TX].pin;
+                usart_dev.gpios[1].kref.port = usart2_dev_infos.gpios[USART2_RX].port;
+                usart_dev.gpios[1].kref.pin = usart2_dev_infos.gpios[USART2_RX].pin;
+            }
             break;
         case 3:
             usart_dev.address = usart3_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(3, S);
             usart_dev.irqs[0].irq = usart3_dev_infos.irqs[0];
 
-            usart_dev.gpios[0].kref.port = usart3_dev_infos.gpios[0].port;
-            usart_dev.gpios[0].kref.pin = usart3_dev_infos.gpios[0].pin;
-
-            usart_dev.gpios[1].kref.port = usart3_dev_infos.gpios[1].port;
-            usart_dev.gpios[1].kref.pin = usart3_dev_infos.gpios[1].pin;
+            if (config->mode == SMARTCARD) {
+                usart_dev.gpios[0].kref.port = usart3_dev_infos.gpios[USART3_SC_TX].port;
+                usart_dev.gpios[0].kref.pin = usart3_dev_infos.gpios[USART3_SC_TX].pin;
+                usart_dev.gpios[1].kref.port = usart3_dev_infos.gpios[USART3_SC_CK].port;
+                usart_dev.gpios[1].kref.pin = usart3_dev_infos.gpios[USART3_SC_CK].pin;
+            } else {
+                usart_dev.gpios[0].kref.port = usart3_dev_infos.gpios[USART3_TX].port;
+                usart_dev.gpios[0].kref.pin = usart3_dev_infos.gpios[USART3_TX].pin;
+                usart_dev.gpios[1].kref.port = usart3_dev_infos.gpios[USART3_RX].port;
+                usart_dev.gpios[1].kref.pin = usart3_dev_infos.gpios[USART3_RX].pin;
+            }
             break;
         case 4:
             usart_dev.address = uart4_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(4,);
             usart_dev.irqs[0].irq = uart4_dev_infos.irqs[0];
 
-            usart_dev.gpios[0].kref.port = uart4_dev_infos.gpios[0].port;
-            usart_dev.gpios[0].kref.pin = uart4_dev_infos.gpios[0].pin;
-
-            usart_dev.gpios[1].kref.port = uart4_dev_infos.gpios[1].port;
-            usart_dev.gpios[1].kref.pin = uart4_dev_infos.gpios[1].pin;
+            if (config->mode == SMARTCARD) {
+                printf("insupported mode for this device!\n");
+                return 1;
+            } else {
+                usart_dev.gpios[0].kref.port = uart4_dev_infos.gpios[UART4_TX].port;
+                usart_dev.gpios[0].kref.pin = uart4_dev_infos.gpios[UART4_TX].pin;
+                usart_dev.gpios[1].kref.port = uart4_dev_infos.gpios[UART4_RX].port;
+                usart_dev.gpios[1].kref.pin = uart4_dev_infos.gpios[UART4_RX].pin;
+            }
             break;
         case 5:
             usart_dev.address = uart5_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(5,);
             usart_dev.irqs[0].irq = uart5_dev_infos.irqs[0];
 
-            usart_dev.gpios[0].kref.port = uart5_dev_infos.gpios[0].port;
-            usart_dev.gpios[0].kref.pin = uart5_dev_infos.gpios[0].pin;
-
-            usart_dev.gpios[1].kref.port = uart5_dev_infos.gpios[1].port;
-            usart_dev.gpios[1].kref.pin = uart5_dev_infos.gpios[1].pin;
+            if (config->mode == SMARTCARD) {
+                printf("insupported mode for this device!\n");
+                return 1;
+            } else {
+                usart_dev.gpios[0].kref.port = uart5_dev_infos.gpios[UART5_TX].port;
+                usart_dev.gpios[0].kref.pin = uart5_dev_infos.gpios[UART5_TX].pin;
+                usart_dev.gpios[1].kref.port = uart5_dev_infos.gpios[UART5_RX].port;
+                usart_dev.gpios[1].kref.pin = uart5_dev_infos.gpios[UART5_RX].pin;
+            }
             break;
         case 6:
             usart_dev.address = usart6_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(6, S);
             usart_dev.irqs[0].irq = usart6_dev_infos.irqs[0];
 
-            usart_dev.gpios[0].kref.port = usart6_dev_infos.gpios[0].port;
-            usart_dev.gpios[0].kref.pin = usart6_dev_infos.gpios[0].pin;
-
-            usart_dev.gpios[1].kref.port = usart6_dev_infos.gpios[1].port;
-            usart_dev.gpios[1].kref.pin = usart6_dev_infos.gpios[1].pin;
-            break;
+            if (config->mode == SMARTCARD) {
+                usart_dev.gpios[0].kref.port = usart6_dev_infos.gpios[USART6_SC_TX].port;
+                usart_dev.gpios[0].kref.pin = usart6_dev_infos.gpios[USART6_SC_TX].pin;
+                usart_dev.gpios[1].kref.port = usart6_dev_infos.gpios[USART6_SC_CK].port;
+                usart_dev.gpios[1].kref.pin = usart6_dev_infos.gpios[USART6_SC_CK].pin;
+            } else {
+                usart_dev.gpios[0].kref.port = usart6_dev_infos.gpios[USART6_TX].port;
+                usart_dev.gpios[0].kref.pin = usart6_dev_infos.gpios[USART6_TX].pin;
+                usart_dev.gpios[1].kref.port = usart6_dev_infos.gpios[USART6_RX].port;
+                usart_dev.gpios[1].kref.pin = usart6_dev_infos.gpios[USART6_RX].pin;
+            }            break;
     }
 
     usart_dev.irqs[0].posthook.status = 0x0000; /* SR register */
