@@ -2,6 +2,12 @@
 #include "api/libusart.h"
 #include "api/libusart_regs.h"
 #include "api/syscall.h"
+#include "generated/usart1.h"
+#include "generated/usart2.h"
+#include "generated/usart3.h"
+#include "generated/uart4.h"
+#include "generated/uart5.h"
+#include "generated/usart6.h"
 
 #define PROD_CLOCK_APB1  42000000
 #define PROD_CLOCK_APB2  84000000
@@ -13,22 +19,15 @@ int      usart_desc = 0;
 // TODO: differenciate tx_port and rx_port that may differs
 static const struct {
   char *   name;
-  uint8_t  port;
-  uint8_t  tx_pin;
-  uint8_t  rx_pin;
-  uint8_t  sc_port;
-  uint8_t  sc_tx_pin;
-  uint8_t  sc_ck_pin;
-  uint8_t  irq;
   uint8_t  af;
 } usarts[] = {
- { "",       0,    0,  0,   0,  0,  0, 53, 0x7 },
- { "usart1", GPIO_PB,  6,  7, GPIO_PA,  9,  8, 53, 0x7 },
- { "usart2", GPIO_PA,  2,  3, GPIO_PA,  2,  4, 54, 0x7 },
- { "usart3", GPIO_PB, 10, 11, GPIO_PB, 10, 12, 55, 0x7 },
- { "uart4",  GPIO_PA,  0,  1,   0,  0,  0, 68, 0x8 },
- { "uart5",  GPIO_PC, 12,  2,   0,  0,  0, 69, 0x8 },
- { "usart6", GPIO_PC,  6,  7, GPIO_PC,  6,  8, 89, 0x8 }
+ { "",       0x7 },
+ { "usart1", 0x7 },
+ { "usart2", 0x7 },
+ { "usart3", 0x7 },
+ { "uart4",  0x8 },
+ { "uart5",  0x8 },
+ { "usart6", 0x8 }
 };
 
 /**** USART basic Read / Write ****/
@@ -333,28 +332,73 @@ uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode)
             return 1;
             break;
         case 1:
-            usart_dev.address = GET_USART_ADDR(1);
+            usart_dev.address = usart1_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(1, S);
+            usart_dev.irqs[0].irq = usart1_dev_infos.irqs[0];
+            /* SMARTCARD or USART mode for GPIOs is set directly in JSON file
+             * Please update the json file of your board to set the correct
+             * GPIO config depending on your needs
+             */
+            usart_dev.gpios[0].kref.port = usart1_dev_infos.gpios[0].port;
+            usart_dev.gpios[0].kref.pin = usart1_dev_infos.gpios[0].pin;
+
+            usart_dev.gpios[1].kref.port = usart1_dev_infos.gpios[1].port;
+            usart_dev.gpios[1].kref.pin = usart1_dev_infos.gpios[1].pin;
             break;
         case 2:
-            usart_dev.address = GET_USART_ADDR(2);
+            usart_dev.address = usart2_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(2, S);
+            usart_dev.irqs[0].irq = usart2_dev_infos.irqs[0];
+
+            usart_dev.gpios[0].kref.port = usart2_dev_infos.gpios[0].port;
+            usart_dev.gpios[0].kref.pin = usart2_dev_infos.gpios[0].pin;
+
+            usart_dev.gpios[1].kref.port = usart2_dev_infos.gpios[1].port;
+            usart_dev.gpios[1].kref.pin = usart2_dev_infos.gpios[1].pin;
             break;
         case 3:
-            usart_dev.address = GET_USART_ADDR(3);
+            usart_dev.address = usart3_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(3, S);
+            usart_dev.irqs[0].irq = usart3_dev_infos.irqs[0];
+
+            usart_dev.gpios[0].kref.port = usart3_dev_infos.gpios[0].port;
+            usart_dev.gpios[0].kref.pin = usart3_dev_infos.gpios[0].pin;
+
+            usart_dev.gpios[1].kref.port = usart3_dev_infos.gpios[1].port;
+            usart_dev.gpios[1].kref.pin = usart3_dev_infos.gpios[1].pin;
             break;
         case 4:
-            usart_dev.address = GET_USART_ADDR(4);
+            usart_dev.address = uart4_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(4,);
+            usart_dev.irqs[0].irq = uart4_dev_infos.irqs[0];
+
+            usart_dev.gpios[0].kref.port = uart4_dev_infos.gpios[0].port;
+            usart_dev.gpios[0].kref.pin = uart4_dev_infos.gpios[0].pin;
+
+            usart_dev.gpios[1].kref.port = uart4_dev_infos.gpios[1].port;
+            usart_dev.gpios[1].kref.pin = uart4_dev_infos.gpios[1].pin;
             break;
         case 5:
-            usart_dev.address = GET_USART_ADDR(5);
+            usart_dev.address = uart5_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(5,);
+            usart_dev.irqs[0].irq = uart5_dev_infos.irqs[0];
+
+            usart_dev.gpios[0].kref.port = uart5_dev_infos.gpios[0].port;
+            usart_dev.gpios[0].kref.pin = uart5_dev_infos.gpios[0].pin;
+
+            usart_dev.gpios[1].kref.port = uart5_dev_infos.gpios[1].port;
+            usart_dev.gpios[1].kref.pin = uart5_dev_infos.gpios[1].pin;
             break;
         case 6:
-            usart_dev.address = GET_USART_ADDR(6);
+            usart_dev.address = usart6_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(6, S);
+            usart_dev.irqs[0].irq = usart6_dev_infos.irqs[0];
+
+            usart_dev.gpios[0].kref.port = usart6_dev_infos.gpios[0].port;
+            usart_dev.gpios[0].kref.pin = usart6_dev_infos.gpios[0].pin;
+
+            usart_dev.gpios[1].kref.port = usart6_dev_infos.gpios[1].port;
+            usart_dev.gpios[1].kref.pin = usart6_dev_infos.gpios[1].pin;
             break;
     }
 
@@ -392,51 +436,24 @@ uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode)
         printf("invalid map mode!\n");
         return 1;
     }
-    usart_dev.irqs[0].irq = usarts[config->usart].irq;
 
     /*
-     * GPIOs
+     * GPIOs (other than pin/port, set using autogenerated header)
      */
 
+    /* gpio[0] is TX */
     usart_dev.gpios[0].mask =
         GPIO_MASK_SET_MODE | GPIO_MASK_SET_TYPE | GPIO_MASK_SET_SPEED |
         GPIO_MASK_SET_PUPD | GPIO_MASK_SET_AFR;
-
-    switch (config->mode) {
-      case UART:
-        usart_dev.gpios[0].kref.port = usarts[config->usart].port;
-        usart_dev.gpios[0].kref.pin = usarts[config->usart].tx_pin;
-        break;
-      case SMARTCARD:
-        usart_dev.gpios[0].kref.port = usarts[config->usart].sc_port;
-        usart_dev.gpios[0].kref.pin = usarts[config->usart].sc_tx_pin;
-        break;
-    default:
-        printf("Wrong usart mode %d.", config->mode);
-        return 1;
-    }
 
     usart_dev.gpios[0].mode = GPIO_PIN_ALTERNATE_MODE;
     usart_dev.gpios[0].speed = GPIO_PIN_VERY_HIGH_SPEED;
     usart_dev.gpios[0].afr = usarts[config->usart].af;
 
+    /* gpio[0] is RX or CK, depending on mode */
     usart_dev.gpios[1].mask =
         GPIO_MASK_SET_MODE | GPIO_MASK_SET_TYPE | GPIO_MASK_SET_SPEED |
         GPIO_MASK_SET_PUPD | GPIO_MASK_SET_AFR;
-
-    switch (config->mode) {
-      case UART:
-        usart_dev.gpios[1].kref.port = usarts[config->usart].port;
-        usart_dev.gpios[1].kref.pin = usarts[config->usart].rx_pin;
-        break;
-      case SMARTCARD:
-        usart_dev.gpios[1].kref.port = usarts[config->usart].sc_port;
-        usart_dev.gpios[1].kref.pin = usarts[config->usart].sc_ck_pin;
-        break;
-    default:
-        printf("Wrong usart mode %d.", config->mode);
-        return 1;
-    }
 
     usart_dev.gpios[1].afr = usarts[config->usart].af;
     usart_dev.gpios[1].mode = GPIO_PIN_ALTERNATE_MODE;
