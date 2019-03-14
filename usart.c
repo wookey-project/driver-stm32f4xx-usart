@@ -1,4 +1,5 @@
 #include "api/print.h"
+#include "api/string.h"
 #include "api/libusart.h"
 #include "api/libusart_regs.h"
 #include "api/syscall.h"
@@ -334,7 +335,7 @@ uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode)
         case 1:
             usart_dev.address = usart1_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(1, S);
-            usart_dev.irqs[0].irq = usart1_dev_infos.irqs[0];
+            usart_dev.irqs[0].irq = USART1_IRQ;
             /* SMARTCARD or USART mode for GPIOs is set directly in JSON file
              * Please update the json file of your board to set the correct
              * GPIO config depending on your needs
@@ -354,7 +355,7 @@ uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode)
         case 2:
             usart_dev.address = usart2_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(2, S);
-            usart_dev.irqs[0].irq = usart2_dev_infos.irqs[0];
+            usart_dev.irqs[0].irq = USART2_IRQ;
 
             if (config->mode == SMARTCARD) {
                 usart_dev.gpios[0].kref.port = usart2_dev_infos.gpios[USART2_SC_TX].port;
@@ -371,7 +372,7 @@ uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode)
         case 3:
             usart_dev.address = usart3_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(3, S);
-            usart_dev.irqs[0].irq = usart3_dev_infos.irqs[0];
+            usart_dev.irqs[0].irq = USART3_IRQ;
 
             if (config->mode == SMARTCARD) {
                 usart_dev.gpios[0].kref.port = usart3_dev_infos.gpios[USART3_SC_TX].port;
@@ -388,7 +389,7 @@ uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode)
         case 4:
             usart_dev.address = uart4_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(4,);
-            usart_dev.irqs[0].irq = uart4_dev_infos.irqs[0];
+            usart_dev.irqs[0].irq = UART4_IRQ;
 
             if (config->mode == SMARTCARD) {
                 printf("insupported mode for this device!\n");
@@ -403,7 +404,7 @@ uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode)
         case 5:
             usart_dev.address = uart5_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(5,);
-            usart_dev.irqs[0].irq = uart5_dev_infos.irqs[0];
+            usart_dev.irqs[0].irq = UART5_IRQ;
 
             if (config->mode == SMARTCARD) {
                 printf("insupported mode for this device!\n");
@@ -418,7 +419,7 @@ uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode)
         case 6:
             usart_dev.address = usart6_dev_infos.address;
             usart_dev.irqs[0].handler = GET_USART_IRQ_HANDLER(6, S);
-            usart_dev.irqs[0].irq = usart6_dev_infos.irqs[0];
+            usart_dev.irqs[0].irq = USART6_IRQ;
 
             if (config->mode == SMARTCARD) {
                 usart_dev.gpios[0].kref.port = usart6_dev_infos.gpios[USART6_SC_TX].port;
