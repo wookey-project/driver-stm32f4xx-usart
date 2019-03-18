@@ -1,4 +1,5 @@
-#include "api/print.h"
+#include "api/stdio.h"
+#include "api/nostd.h"
 #include "api/string.h"
 #include "api/libusart.h"
 #include "api/libusart_regs.h"
