@@ -33,7 +33,7 @@ static const struct {
 };
 
 /**** USART basic Read / Write ****/
-void usart_putc(uint8_t usart, char c)
+static void usart_putc(uint8_t usart, char c)
 {
     /* Wait for TX to be ready */
     while (!get_reg(r_CORTEX_M_USART_SR(usart), USART_SR_TXE))
@@ -63,7 +63,7 @@ void usart_write(uint8_t usart, char *msg, uint32_t len)
     }
 }
 
-char usart_getc(uint8_t usart)
+static char usart_getc(uint8_t usart)
 {
     while (!get_reg(r_CORTEX_M_USART_SR(usart), USART_SR_RXNE))
         continue;

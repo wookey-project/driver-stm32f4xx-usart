@@ -165,23 +165,11 @@ uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode);
 uint8_t usart_init(usart_config_t * config);
 
 /**
- * usart_putc - Send a character
- * @c: Character to send.
- */
-void usart_putc(uint8_t usart, char c);
-
-/**
  * usart_write - Send a string
  * @msg: string of size @len to send.
  * @len: size of @msg.
  */
 void usart_write(uint8_t usart, char *msg, uint32_t len);
-
-/**
- * usart_getc - Read a character
- * Return: The character read.
- */
-char usart_getc(uint8_t usart);
 
 /**
  * usart_read - Read a string
