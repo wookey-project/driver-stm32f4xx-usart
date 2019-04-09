@@ -119,8 +119,8 @@ the character to be received or to be sent::
 
    usart_config_t config;
    [...]
-   config.callback_usart_getc_ptr = my_getc;
-   config.callback_usart_getc_ptr = my_putc;
+   config.callback_usart_getc_ptr = &my_getc;
+   config.callback_usart_getc_ptr = &my_putc;
 
    [...]
    usart_init(config);
