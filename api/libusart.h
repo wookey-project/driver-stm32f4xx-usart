@@ -1,8 +1,8 @@
 #ifndef STM32F4XX_USART_H
 #define STM32F4XX_USART_H
 
-#include "api/types.h"
-#include "api/regutils.h"
+#include "libc/types.h"
+#include "libc/regutils.h"
 #include "libusart_regs.h"
 
 typedef void (*cb_usart_irq_handler_t) (uint32_t status, uint32_t data);

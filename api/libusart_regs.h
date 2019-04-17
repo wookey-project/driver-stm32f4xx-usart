@@ -1,8 +1,8 @@
 #ifndef STM32F4XX_USART_REGS_H
 #define STM32F4XX_USART_REGS_H
 
-#include "api/types.h"
-#include "api/regutils.h"
+#include "libc/types.h"
+#include "libc/regutils.h"
 
 #define PERIPH_BASE                         ((uint32_t) 0x40000000)
 #define APB1PERIPH_BASE       PERIPH_BASE
