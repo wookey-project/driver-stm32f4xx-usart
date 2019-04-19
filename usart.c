@@ -342,10 +342,17 @@ uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode)
              * GPIO config depending on your needs
              */
             if (config->mode == SMARTCARD) {
+#ifdef CONFIG_WOOKEY
                 usart_dev.gpios[0].kref.port = usart1_dev_infos.gpios[USART1_SC_TX].port;
                 usart_dev.gpios[0].kref.pin = usart1_dev_infos.gpios[USART1_SC_TX].pin;
                 usart_dev.gpios[1].kref.port = usart1_dev_infos.gpios[USART1_SC_CK].port;
                 usart_dev.gpios[1].kref.pin = usart1_dev_infos.gpios[USART1_SC_CK].pin;
+#else
+                usart_dev.gpios[0].kref.port = usart1_dev_infos.gpios[USART1_TX].port;
+                usart_dev.gpios[0].kref.pin = usart1_dev_infos.gpios[USART1_TX].pin;
+                usart_dev.gpios[1].kref.port = usart1_dev_infos.gpios[USART1_RX].port;
+                usart_dev.gpios[1].kref.pin = usart1_dev_infos.gpios[USART1_RX].pin;
+#endif
             } else {
                 usart_dev.gpios[0].kref.port = usart1_dev_infos.gpios[USART1_TX].port;
                 usart_dev.gpios[0].kref.pin = usart1_dev_infos.gpios[USART1_TX].pin;
@@ -359,10 +366,17 @@ uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode)
             usart_dev.irqs[0].irq = USART2_IRQ;
 
             if (config->mode == SMARTCARD) {
+#ifdef CONFIG_WOOKEY
                 usart_dev.gpios[0].kref.port = usart2_dev_infos.gpios[USART2_SC_TX].port;
                 usart_dev.gpios[0].kref.pin = usart2_dev_infos.gpios[USART2_SC_TX].pin;
                 usart_dev.gpios[1].kref.port = usart2_dev_infos.gpios[USART2_SC_CK].port;
                 usart_dev.gpios[1].kref.pin = usart2_dev_infos.gpios[USART2_SC_CK].pin;
+#else
+                usart_dev.gpios[0].kref.port = usart2_dev_infos.gpios[USART2_TX].port;
+                usart_dev.gpios[0].kref.pin = usart2_dev_infos.gpios[USART2_TX].pin;
+                usart_dev.gpios[1].kref.port = usart2_dev_infos.gpios[USART2_RX].port;
+                usart_dev.gpios[1].kref.pin = usart2_dev_infos.gpios[USART2_RX].pin;
+#endif
             } else {
                 usart_dev.gpios[0].kref.port = usart2_dev_infos.gpios[USART2_TX].port;
                 usart_dev.gpios[0].kref.pin = usart2_dev_infos.gpios[USART2_TX].pin;
@@ -376,10 +390,17 @@ uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode)
             usart_dev.irqs[0].irq = USART3_IRQ;
 
             if (config->mode == SMARTCARD) {
+#ifdef CONFIG_WOOKEY
                 usart_dev.gpios[0].kref.port = usart3_dev_infos.gpios[USART3_SC_TX].port;
                 usart_dev.gpios[0].kref.pin = usart3_dev_infos.gpios[USART3_SC_TX].pin;
                 usart_dev.gpios[1].kref.port = usart3_dev_infos.gpios[USART3_SC_CK].port;
                 usart_dev.gpios[1].kref.pin = usart3_dev_infos.gpios[USART3_SC_CK].pin;
+#else
+                usart_dev.gpios[0].kref.port = usart3_dev_infos.gpios[USART3_TX].port;
+                usart_dev.gpios[0].kref.pin = usart3_dev_infos.gpios[USART3_TX].pin;
+                usart_dev.gpios[1].kref.port = usart3_dev_infos.gpios[USART3_RX].port;
+                usart_dev.gpios[1].kref.pin = usart3_dev_infos.gpios[USART3_RX].pin;
+#endif
             } else {
                 usart_dev.gpios[0].kref.port = usart3_dev_infos.gpios[USART3_TX].port;
                 usart_dev.gpios[0].kref.pin = usart3_dev_infos.gpios[USART3_TX].pin;
@@ -423,10 +444,17 @@ uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode)
             usart_dev.irqs[0].irq = USART6_IRQ;
 
             if (config->mode == SMARTCARD) {
+#ifdef CONFIG_WOOKEY
                 usart_dev.gpios[0].kref.port = usart6_dev_infos.gpios[USART6_SC_TX].port;
                 usart_dev.gpios[0].kref.pin = usart6_dev_infos.gpios[USART6_SC_TX].pin;
                 usart_dev.gpios[1].kref.port = usart6_dev_infos.gpios[USART6_SC_CK].port;
                 usart_dev.gpios[1].kref.pin = usart6_dev_infos.gpios[USART6_SC_CK].pin;
+#else
+                usart_dev.gpios[0].kref.port = usart6_dev_infos.gpios[USART6_TX].port;
+                usart_dev.gpios[0].kref.pin = usart6_dev_infos.gpios[USART6_TX].pin;
+                usart_dev.gpios[1].kref.port = usart6_dev_infos.gpios[USART6_RX].port;
+                usart_dev.gpios[1].kref.pin = usart6_dev_infos.gpios[USART6_RX].pin;
+#endif
             } else {
                 usart_dev.gpios[0].kref.port = usart6_dev_infos.gpios[USART6_TX].port;
                 usart_dev.gpios[0].kref.pin = usart6_dev_infos.gpios[USART6_TX].pin;
