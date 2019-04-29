@@ -2,7 +2,7 @@
 #include "libc/nostd.h"
 #include "libc/string.h"
 #include "api/libusart.h"
-#include "api/libusart_regs.h"
+#include "libusart_regs.h"
 #include "libc/syscall.h"
 #define PROD_CLOCK_APB1  42000000
 #define PROD_CLOCK_APB2  84000000
@@ -104,6 +104,12 @@ volatile uint32_t *usart_get_data_addr(uint8_t usart)
 {
     return r_CORTEX_M_USART_DR(usart);
 }
+
+volatile uint32_t *usart_get_status_addr(uint8_t usart)
+{
+    return r_CORTEX_M_USART_SR(usart);
+}
+
 
 void usart_set_baudrate(usart_config_t * config)
 {

@@ -3,7 +3,7 @@
 
 #include "libc/types.h"
 #include "libc/regutils.h"
-#include "libusart_regs.h"
+#include "libusart_fields.h"
 
 typedef void (*cb_usart_irq_handler_t) (uint32_t status, uint32_t data);
 typedef char (*cb_usart_getc_t) (void);
@@ -201,6 +201,8 @@ void usart_enable_dma(uint8_t usart);
  * written.
  */
 volatile uint32_t *usart_get_data_addr(uint8_t usart);
+
+volatile uint32_t *usart_get_status_addr(uint8_t usart);
 
 /* Get the clock frequency value of the APB bus driving the USART */
 uint32_t usart_get_bus_clock(usart_config_t * config);
