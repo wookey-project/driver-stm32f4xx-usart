@@ -4,13 +4,6 @@
 #include "api/libusart.h"
 #include "api/libusart_regs.h"
 #include "libc/syscall.h"
-#include "generated/usart1.h"
-#include "generated/usart2.h"
-#include "generated/usart3.h"
-#include "generated/uart4.h"
-#include "generated/uart5.h"
-#include "generated/usart6.h"
-
 #define PROD_CLOCK_APB1  42000000
 #define PROD_CLOCK_APB2  84000000
 

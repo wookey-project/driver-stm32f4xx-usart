@@ -3,17 +3,19 @@
 
 #include "libc/types.h"
 #include "libc/regutils.h"
+#include "generated/usart1.h"
+#include "generated/usart2.h"
+#include "generated/usart3.h"
+#include "generated/uart4.h"
+#include "generated/uart5.h"
+#include "generated/usart6.h"
+
+
 
 #define PERIPH_BASE                         ((uint32_t) 0x40000000)
 #define APB1PERIPH_BASE       PERIPH_BASE
 #define APB2PERIPH_BASE       (PERIPH_BASE + 0x00010000)
 
-#define USART1_BASE           (APB2PERIPH_BASE + 0x1000)
-#define USART2_BASE           (APB1PERIPH_BASE + 0x4400)
-#define USART3_BASE           (APB1PERIPH_BASE + 0x4800)
-#define UART4_BASE            (APB1PERIPH_BASE + 0x4C00)
-#define UART5_BASE            (APB1PERIPH_BASE + 0x5000)
-#define USART6_BASE           (APB2PERIPH_BASE + 0x1400)
 /* Add some aliases for UART4 and UART 5 */
 #define USART4_BASE	UART4_BASE
 #define USART5_BASE	UART5_BASE
