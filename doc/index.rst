@@ -1,6 +1,9 @@
 The USART driver
 ================
 
+.. highlight:: c
+
+
 This library is an implementation of the STM32F4 U(S)ART hardware devices.
 
 It provide a light abstraction for all the SoC U(S)ART devices in order to map and

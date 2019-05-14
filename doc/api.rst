@@ -1,6 +1,9 @@
 About The U(S)ART driver API
 ----------------------------
 
+.. highlight:: c
+
+
 Initializing the USART driver
 """""""""""""""""""""""""""""
 
