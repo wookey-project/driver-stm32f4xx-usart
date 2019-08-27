@@ -10,6 +10,8 @@
 device_t usart_dev;
 int      usart_desc = 0;
 
+volatile bool mapped = true;
+
 
 // TODO: differenciate tx_port and rx_port that may differs
 static const struct {
@@ -492,6 +494,7 @@ uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode)
     } else if (map_mode == USART_MAP_VOLUNTARY) {
         usart_dev.map_mode = DEV_MAP_VOLUNTARY;
         map_voluntary = true;
+        mapped = false;
     } else {
         printf("invalid map mode!\n");
         return 1;
@@ -547,24 +550,26 @@ uint8_t usart_early_init(usart_config_t * config, usart_map_mode_t map_mode)
 
 int usart_map(void)
 {
-    if (map_voluntary) {
+    if (map_voluntary && !mapped) {
         uint8_t ret;
         if ((ret = sys_cfg(CFG_DEV_MAP, usart_desc)) != SYS_E_DONE) {
             printf("Unable to map usart!\n");
             return 1;
         }
+        mapped = true;
     }
     return 0;
 }
 
 int usart_unmap(void)
 {
-    if (map_voluntary) {
+    if (map_voluntary && mapped) {
         uint8_t ret;
         if ((ret = sys_cfg(CFG_DEV_UNMAP, usart_desc)) != SYS_E_DONE) {
             printf("Unable to unmap usart!\n");
             return 1;
         }
+        mapped = false;
     }
     return 0;
 }
