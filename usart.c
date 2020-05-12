@@ -4,6 +4,8 @@
 #include "api/libusart.h"
 #include "libusart_regs.h"
 #include "libc/syscall.h"
+#include "libc/sanhandlers.h"
+
 #define PROD_CLOCK_APB1  42000000
 #define PROD_CLOCK_APB2  84000000
 
@@ -145,7 +147,14 @@ void U##type##ART##num##_IRQHandler(uint8_t irq __attribute__((unused)),\
                                     uint32_t data)\
 {\
 	if(cb_usart##num##_irq_handler != NULL){\
-		cb_usart##num##_irq_handler(status, data);\
+		/* Since we call a callback, we check that it has been registered */\
+		if(handler_sanity_check((void*)cb_usart##num##_irq_handler)){\
+			sys_exit();\
+			return;\
+		}\
+		else{\
+			cb_usart##num##_irq_handler(status, data);\
+		}\
 	}\
 }\
 
