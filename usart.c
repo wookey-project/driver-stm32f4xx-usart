@@ -148,8 +148,7 @@ void U##type##ART##num##_IRQHandler(uint8_t irq __attribute__((unused)),\
 {\
 	if(cb_usart##num##_irq_handler != NULL){\
 		/* Since we call a callback, we check that it has been registered */\
-		if(handler_sanity_check((void*)cb_usart##num##_irq_handler)){\
-			sys_exit();\
+		if(handler_sanity_check_with_panic((physaddr_t)cb_usart##num##_irq_handler)){\
 			return;\
 		}\
 		else{\
